@@ -13,12 +13,16 @@ class Eshift(Section):
             self.types = self.get_value("ACE", "type", "H").split()
         elif config.has_section("CUSTOM"):
             self.types = self.get_value("CUSTOM", "type", "H").split()
-            
+        elif config.has_section("MOMENTTENSOR"):
+            self.types = self.get_value("MOMENTTENSOR", "type", "H").split()
+
         if config.has_section("ESHIFT"):
             self.eshift = {}
         else:
             return
         for atom_type in self.types:
-            self.eshift[atom_type] = self.get_value("ESHIFT", "{}".format(atom_type), "0.0", "float")
+            self.eshift[atom_type] = self.get_value(
+                "ESHIFT", "{}".format(atom_type), "0.0", "float"
+            )
 
         self.delete()

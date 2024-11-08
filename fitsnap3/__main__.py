@@ -35,6 +35,7 @@ try:
     # stubs = 0 MPI is active
     stubs = 0
     from mpi4py import MPI
+
     comm = MPI.COMM_WORLD
 except ModuleNotFoundError:
     stubs = 1
@@ -45,16 +46,16 @@ def main():
     # Instantiate single fitsnap instance for traditional flow of control.
     # This will create an internal parallel tools instance which will detect
     # availability of MPI for parallelization.
-    try:
-        fs = FitSnap(comm=comm)
-        fs.scrape_configs(delete_scraper=True)
-        fs.process_configs(delete_data=True)
-        # Good practice after a large parallel operation is to impose a barrier.
-        fs.pt.all_barrier()
-        fs.perform_fit()
-        fs.write_output()
-    except Exception as e:
-        fs.pt.exception(e)
+    # try:
+    fs = FitSnap(comm=comm)
+    fs.scrape_configs(delete_scraper=True)
+    fs.process_configs(delete_data=True)
+    # Good practice after a large parallel operation is to impose a barrier.
+    # fs.pt.all_barrier()
+    # fs.perform_fit()
+    # fs.write_output()
+    # except Exception as e:
+    #     fs.pt.exception(e)
 
 
 if __name__ == "__main__":
